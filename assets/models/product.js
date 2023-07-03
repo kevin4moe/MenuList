@@ -12,11 +12,11 @@ class Product {
     }
   ) {
     this.ids = uuidv4();
-    this.name = pd.name;
+    this.name = pd.name || "NA";
     this.category = pd.category;
     this.unit = pd.unit;
     this.quantity = pd.quantity;
-    this.price = pd.price;
+    this.price = pd.price || 0;
   }
 
   get total() {

@@ -12,8 +12,6 @@ productList.addProduct({
   total: 50,
 });
 
-console.log(productList);
-
 const columns = [
   { key: "name", label: "Producto" },
   { key: "category", label: "Categoria" },
@@ -46,8 +44,6 @@ function addOne() {
     quantity: quantity.value,
     price: price.value,
   };
-
-  console.log(one);
 
   productList.addProduct(one);
 }
@@ -120,9 +116,8 @@ const selected = ref([productList.getProducts[0]]);
       >
     </div>
     <UTable
-      v-model="selected"
       :columns="selectedColumns"
-      :rows="productList.getProducts"
+      :rows="[...productList.getProducts, { total: productList.total }]"
     >
       <template #name-data="{ row }">
         <span
