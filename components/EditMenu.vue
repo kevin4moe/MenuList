@@ -1,0 +1,56 @@
+<script setup>
+const props = defineProps({
+  modelData: Object,
+});
+
+const emit = defineEmits(["addOne"]);
+
+const categories = ["Alimentos", "Bebidas", "Limpieza", "Higiene", "Otros"];
+const measurements = ["kg", "L", "und"];
+const md = props.modelData ? props.modelData : {};
+
+const art = reactive({
+  name: md.name || "",
+  category: md.category || categories[0],
+  unit: md.unit || measurements[0],
+  quantity: md.quantity || 1,
+  price: md.price || null,
+});
+</script>
+
+<template>
+  <div>
+    <UFormGroup class="col-span-8" name="name" label="Nombre del producto">
+      <UInput v-model="art.name" />
+    </UFormGroup>
+    <UFormGroup class="col-span-4" name="category" label="Categoría">
+      <USelect v-model="art.category" :options="categories" />
+    </UFormGroup>
+    <UFormGroup
+      class="col-span-3 mt-auto"
+      name="unit"
+      label="Unidad de referencia"
+    >
+      <USelect v-model="art.unit" :options="measurements" />
+    </UFormGroup>
+    <UFormGroup
+      class="col-span-3 mt-auto"
+      name="quantity"
+      label="Cantidad comprada"
+    >
+      <UInput v-model.number="art.quantity">
+        <template #trailing>
+          <span class="text-gray-500 dark:text-gray-400 text-xs">{{
+            unit
+          }}</span>
+        </template>
+      </UInput>
+    </UFormGroup>
+    <UFormGroup class="col-span-6 mt-auto" name="price" label="Precio">
+      <UInput v-model.number="art.price" type="number" />
+    </UFormGroup>
+    <UButton class="col-span-12" block @click="$emit('clickAddOne', art)"
+      >Agregar a la lista</UButton
+    >
+  </div>
+</template>

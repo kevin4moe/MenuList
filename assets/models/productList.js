@@ -18,6 +18,12 @@ class ProductList {
   getProduct(id) {
     return this.#productList.find((product) => product.id === id);
   }
+  updateProduct(id, productNew) {
+    console.log(id, productNew);
+    const index = this.#productList.findIndex((pct) => pct.id == id);
+    const product = new Product(productNew);
+    this.#productList.splice(index, 1, product);
+  }
   removeProduct(id) {
     const index = this.#productList.findIndex((pct) => pct.id == id);
     this.#productList.splice(index, 1);
