@@ -34,19 +34,19 @@ const art = reactive({
       <USelect v-model="art.unit" :options="measurements" />
     </UFormGroup>
     <UFormGroup
-      class="col-span-3 mt-auto"
+      class="col-span-4 mt-auto"
       name="quantity"
       label="Cantidad comprada"
     >
-      <UInput v-model.number="art.quantity">
+      <UInput v-model.number="art.quantity" type="number">
         <template #trailing>
           <span class="text-gray-500 dark:text-gray-400 text-xs">{{
-            unit
+            art.unit
           }}</span>
         </template>
       </UInput>
     </UFormGroup>
-    <UFormGroup class="col-span-6 mt-auto" name="price" label="Precio">
+    <UFormGroup class="col-span-5 mt-auto" name="price" label="Precio">
       <UInput v-model.number="art.price" type="number" />
     </UFormGroup>
     <UButton class="col-span-12" block @click="$emit('clickAddOne', art)"
