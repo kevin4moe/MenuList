@@ -38,7 +38,7 @@ const art = reactive({
       name="quantity"
       label="Cantidad comprada"
     >
-      <UInput v-model.number="art.quantity" type="number">
+      <UInput v-model.number="art.quantity" type="number" step="0.01">
         <template #trailing>
           <span class="text-gray-500 dark:text-gray-400 text-xs">{{
             art.unit
@@ -47,7 +47,7 @@ const art = reactive({
       </UInput>
     </UFormGroup>
     <UFormGroup class="col-span-5 mt-auto" name="price" label="Precio">
-      <UInput v-model.number="art.price" type="number" />
+      <UInput v-model.number="art.price" type="number" step="0.1" @focus="event => event.target.select()"> />
     </UFormGroup>
     <UButton class="col-span-12" block @click="$emit('clickAddOne', art)"
       >Agregar a la lista</UButton
