@@ -47,7 +47,7 @@ const art = reactive({
       </UInput>
     </UFormGroup>
     <UFormGroup class="col-span-5 mt-auto" name="price" label="Precio">
-      <UInput v-model.number="art.price" type="number" step="0.1" @focus="event => event.target.select()"> />
+      <UInput v-model.number="art.price" type="number" step="0.1" @focus="event => event.target.select()" />
     </UFormGroup>
     <UButton class="col-span-12" block @click="$emit('clickAddOne', art)"
       >Agregar a la lista</UButton
