@@ -1,5 +1,7 @@
 <script setup>
-import { ProductList } from "../assets/models/productList.js";
+import { useProductsStore } from "../assets/stores/MisCompras.js";
+
+const productList = useProductsStore();
 
 useHead({
   charset: "utf-8",
@@ -39,17 +41,6 @@ useHead({
       src: "/sw.js",
     },
   ],
-});
-
-const productList = new ProductList();
-
-productList.addProduct({
-  name: "Manzana",
-  category: "Frutas y Verduras",
-  unit: "kg",
-  quantity: 0.5,
-  price: 100,
-  total: 50,
 });
 
 const columns = [

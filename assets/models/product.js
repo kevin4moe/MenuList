@@ -17,11 +17,12 @@ class Product {
     this.unit = pd.unit;
     this.quantity = pd.quantity;
     this.price = pd.price || 0;
+    this.total = this.price * this.quantity;
   }
 
-  get total() {
-    return this.price * this.quantity;
-  }
+  // get total() {
+  //   return this.price * this.quantity;
+  // }
 
   get id() {
     return this.ids;
