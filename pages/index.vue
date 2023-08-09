@@ -101,6 +101,7 @@ function updateOne(one) {
 }
 
 function upData() {
+  const d = new Date().toLocaleString("es-MX").split(", ");
   fetch("https://vikala-list.netlify.app/.netlify/functions/pdf", {
     method: "PUT",
 
@@ -109,7 +110,7 @@ function upData() {
     },
     body: JSON.stringify({
       items: [...productList.getProducts],
-      date: Date.now(),
+      date: d,
     }),
   })
     .then((response) => response.blob())
@@ -120,7 +121,7 @@ function upData() {
       const a = document.createElement("a");
       a.style.display = "none";
       a.href = url;
-      a.download = `Mi Mandado.pdf`;
+      a.download = `Mi Mandado ${d[0]} ${d[1]}.pdf`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);

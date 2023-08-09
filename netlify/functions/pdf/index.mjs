@@ -35,7 +35,7 @@ export const handler = async function (event, context) {
 
   body.push(["", "", "", "", "Total", total]);
 
-  const d = new Date(products.date).toLocaleString("es-MX").split(", ");
+  const d = products.date;
   doc.text(`Lista de compras: ${d[0]} a las ${d[1]}`, 10, 10);
 
   doc.autoTable({
