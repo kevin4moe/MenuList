@@ -99,6 +99,16 @@ function addOne(one) {
 function updateOne(one) {
   productList.updateProduct(modelData.ids, one);
 }
+
+function upData() {
+  fetch("https://vikala-list.netlify.app/.netlify/functions/pdf", {
+    method: "PUT",
+    body: [...productList.getProducts, { total: productList.total }],
+  })
+    .then((response) => response.json())
+    .catch((error) => console.error("Error:", error))
+    .then((response) => console.log("Success:", response));
+}
 </script>
 
 <template>
@@ -131,5 +141,6 @@ function updateOne(one) {
         @clickAddOne="updateOne"
       />
     </UModal>
+    <UButton size="xl" @click="upData" block>Descargar PDF</UButton>
   </main>
 </template>
