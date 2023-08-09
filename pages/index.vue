@@ -107,7 +107,10 @@ function upData() {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify([...productList.getProducts]),
+    body: JSON.stringify({
+      items: [...productList.getProducts],
+      date: Date.now(),
+    }),
   })
     .then((response) => response.blob())
     .catch((error) => console.error("Error:", error))
@@ -117,8 +120,7 @@ function upData() {
       const a = document.createElement("a");
       a.style.display = "none";
       a.href = url;
-      // the filename you want
-      a.download = "todo-1.json";
+      a.download = `Mi Mandado.pdf`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);

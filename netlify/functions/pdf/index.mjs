@@ -20,18 +20,9 @@ export const handler = async function (event, context) {
           price: 25,
           total: 50,
         },
-        {
-          ids: "598456c3-8440-411c-9b06-092046d7eb9c",
-          name: "b",
-          category: "Alimentos",
-          unit: "kg",
-          quantity: 5,
-          price: 10,
-          total: 50,
-        },
       ];
 
-  const body = products.map((product) => [
+  const body = products.items.map((product) => [
     product.name,
     product.category,
     product.price,
@@ -40,11 +31,11 @@ export const handler = async function (event, context) {
     product.total,
   ]);
 
-  const total = products.reduce((acc, product) => acc + product.total, 0);
+  const total = products.items.reduce((acc, product) => acc + product.total, 0);
 
   body.push(["", "", "", "", "Total", total]);
 
-  const d = new Date().toLocaleString(event.headers["x-language"]).split(", ");
+  const d = new Date(products.date).toLocaleString("es-MX").split(", ");
   doc.text(`Lista de compras: ${d[0]} a las ${d[1]}`, 10, 10);
 
   doc.autoTable({
