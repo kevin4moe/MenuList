@@ -58,7 +58,7 @@ export const handler = async function (event, context) {
       "Content-Type": "application/pdf",
     },
     statusCode: 200,
-    body: body64,
+    body: body64.split(",")[1],
     isBase64Encoded: true,
   };
 };
