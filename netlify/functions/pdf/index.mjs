@@ -43,22 +43,22 @@ export const handler = async function (event, context) {
   const d = new Date().toLocaleString("es-MX").split(", ");
   doc.text(`Lista de compras: ${d[0]} a las ${d[1]}`, 10, 10);
 
-  console.log("doc", doc.output("datauristring"));
+  console.log("d", d);
   // doc.autoTable({
   //   head: [["Producto", "Categoria", "Precio", "Cantidad", "Unidad", "Total"]],
   //   body,
   // });
 
-  const body64 = doc.output("datauri");
+  const body64 = doc.output("datauristring");
   console.log("64 doc", body64);
 
   return {
-    // headers: {
-    //   "Access-Control-Allow-Origin": "*",
-    //   "Content-Type": "application/pdf",
-    // },
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/pdf",
+    },
     statusCode: 200,
     body: "body64",
-    // isBase64Encoded: true,
+    isBase64Encoded: true,
   };
 };
