@@ -109,10 +109,10 @@ function upData() {
     },
     body: JSON.stringify([...productList.getProducts]),
   })
-    .then((response) => response.json())
+    .then((response) => response.blob())
     .catch((error) => console.error("Error:", error))
-    .then((response) => {
-      console.log("Success:", response);
+    .then((blob) => {
+      console.log("Success:", blob);
       const url = window.URL.createObjectURL(blob);
       window.URL.revokeObjectURL(url);
     });
