@@ -44,10 +44,10 @@ export const handler = async function (event, context) {
   doc.text(`Lista de compras: ${d[0]} a las ${d[1]}`, 10, 10);
 
   console.log("d", d);
-  // doc.autoTable({
-  //   head: [["Producto", "Categoria", "Precio", "Cantidad", "Unidad", "Total"]],
-  //   body,
-  // });
+  doc.autoTable({
+    head: [["Producto", "Categoria", "Precio", "Cantidad", "Unidad", "Total"]],
+    body,
+  });
 
   const body64 = doc.output("datauristring");
   console.log("64 doc", body64);
@@ -58,7 +58,7 @@ export const handler = async function (event, context) {
       "Content-Type": "application/pdf",
     },
     statusCode: 200,
-    body: "body64",
+    body: body64,
     isBase64Encoded: true,
   };
 };
