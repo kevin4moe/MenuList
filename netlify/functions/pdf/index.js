@@ -1,5 +1,5 @@
-import { jsPDF } from "jspdf";
-import "jspdf-autotable";
+const { jsPDF } = require("jspdf");
+require("jspdf-autotable");
 
 const doc = new jsPDF();
 
@@ -46,7 +46,7 @@ doc.autoTable({
 });
 
 const body64 = doc.output("datauri");
-console.log(body64);
+console.log("64 doc", body64);
 
 export const handler = async function (event, context) {
   return {
