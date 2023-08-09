@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev -p 3020",
+    "dev": "nuxt dev -p 3000",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.31",
     "pinia": "^2.1.6",
     "uuid": "^9.0.0"
   },
