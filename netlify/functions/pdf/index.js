@@ -45,6 +45,9 @@ doc.autoTable({
   body,
 });
 
+const body64 = doc.output("datauri");
+console.log(body64);
+
 export const handler = async function (event, context) {
   return {
     headers: {
@@ -52,7 +55,7 @@ export const handler = async function (event, context) {
       "Content-Type": "application/pdf",
     },
     statusCode: 200,
-    body: doc.output("datauri"),
+    body: body64,
     isBase64Encoded: true,
   };
 };
