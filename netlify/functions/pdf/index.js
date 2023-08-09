@@ -52,7 +52,7 @@ export const handler = async function (event, context) {
       "Content-Type": "application/pdf",
     },
     statusCode: 200,
-    body: doc.output("datauristring"),
+    body: doc.output("datauri"),
     isBase64Encoded: true,
   };
 };
