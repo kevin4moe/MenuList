@@ -1,7 +1,7 @@
-export const handler = async function (event, context) {
-  const { jsPDF } = require("jspdf");
-  require("jspdf-autotable");
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
+export const handler = async function (event, context) {
   const doc = new jsPDF();
 
   const products = [
