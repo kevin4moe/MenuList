@@ -3,9 +3,8 @@ import "jspdf-autotable";
 
 export const handler = async function (event, context) {
   const doc = new jsPDF();
-  console.log("event", event);
-  console.log("context", context);
-  console.log("doc", doc);
+  console.log("event", event.headers["x-language"]);
+  console.log("event", event.headers["x-language"] === "es-MX");
 
   const products = [
     {
@@ -44,10 +43,11 @@ export const handler = async function (event, context) {
   const d = new Date().toLocaleString("es-MX").split(", ");
   doc.text(`Lista de compras: ${d[0]} a las ${d[1]}`, 10, 10);
 
-  doc.autoTable({
-    head: [["Producto", "Categoria", "Precio", "Cantidad", "Unidad", "Total"]],
-    body,
-  });
+  console.log("doc", doc.output("datauristring"));
+  // doc.autoTable({
+  //   head: [["Producto", "Categoria", "Precio", "Cantidad", "Unidad", "Total"]],
+  //   body,
+  // });
 
   const body64 = doc.output("datauri");
   console.log("64 doc", body64);
