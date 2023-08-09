@@ -3,6 +3,9 @@ import "jspdf-autotable";
 
 export const handler = async function (event, context) {
   const doc = new jsPDF();
+  console.log("event", event);
+  console.log("context", context);
+  console.log("doc", doc);
 
   const products = [
     {
@@ -50,12 +53,12 @@ export const handler = async function (event, context) {
   console.log("64 doc", body64);
 
   return {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/pdf",
-    },
+    // headers: {
+    //   "Access-Control-Allow-Origin": "*",
+    //   "Content-Type": "application/pdf",
+    // },
     statusCode: 200,
-    body: body64,
-    isBase64Encoded: true,
+    body: "body64",
+    // isBase64Encoded: true,
   };
 };
