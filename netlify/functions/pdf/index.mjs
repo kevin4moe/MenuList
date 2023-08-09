@@ -5,6 +5,8 @@ export const handler = async function (event, context) {
   const doc = new jsPDF();
   console.log("event", event.headers["x-language"]);
   console.log("event", event.headers["x-language"] === "es-MX");
+  console.log("event", event);
+  console.log("event", context);
 
   const products = [
     {
@@ -40,17 +42,15 @@ export const handler = async function (event, context) {
 
   body.push(["", "", "", "", "Total", total]);
 
-  const d = new Date().toLocaleString("es-MX").split(", ");
+  const d = new Date().toLocaleString(event.headers["x-language"]).split(", ");
   doc.text(`Lista de compras: ${d[0]} a las ${d[1]}`, 10, 10);
 
-  console.log("d", d);
   doc.autoTable({
     head: [["Producto", "Categoria", "Precio", "Cantidad", "Unidad", "Total"]],
     body,
   });
 
   const body64 = doc.output("datauristring");
-  console.log("64 doc", body64);
 
   return {
     headers: {
