@@ -103,7 +103,10 @@ function updateOne(one) {
 function upData() {
   fetch("https://vikala-list.netlify.app/.netlify/functions/pdf", {
     method: "PUT",
-    body: [...productList.getProducts, { total: productList.total }],
+    body: JSON.stringify([
+      ...productList.getProducts,
+      { total: productList.total },
+    ]),
   })
     .then((response) => response.json())
     .catch((error) => console.error("Error:", error))
