@@ -103,14 +103,19 @@ function updateOne(one) {
 function upData() {
   fetch("https://vikala-list.netlify.app/.netlify/functions/pdf", {
     method: "PUT",
-    body: JSON.stringify([
-      ...productList.getProducts,
-      { total: productList.total },
-    ]),
+
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify([...productList.getProducts]),
   })
     .then((response) => response.json())
     .catch((error) => console.error("Error:", error))
-    .then((response) => console.log("Success:", response));
+    .then((response) => {
+      console.log("Success:", response);
+      const url = window.URL.createObjectURL(blob);
+      window.URL.revokeObjectURL(url);
+    });
 }
 </script>
 
