@@ -23,17 +23,13 @@ export const handler = async function (event, context) {
       ];
 
   const body = products.items.map((product) => [
-    product.name,
-    product.category,
-    product.price,
-    product.quantity,
-    product.unit,
+    product.name || "",
+    product.category || "",
+    product.price || "",
+    product.quantity || "",
+    product.unit || "Total",
     product.total,
   ]);
-
-  const total = products.items.reduce((acc, product) => acc + product.total, 0);
-
-  body.push(["", "", "", "", "Total", total]);
 
   const d = products.date;
   doc.text(`Lista de compras: ${d[0]} a las ${d[1]}`, 10, 10);

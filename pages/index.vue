@@ -101,7 +101,7 @@ function upData() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      items: [...productList.getProducts],
+      items: updateFormat,
       date: d,
     }),
   })
