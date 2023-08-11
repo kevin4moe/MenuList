@@ -101,7 +101,7 @@ function upData() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      items: { ...updateFormat.value },
+      items: Object.keys({ ...updateFormat.value }).map((key) => key),
       date: d,
     }),
   })
