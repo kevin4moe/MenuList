@@ -22,6 +22,8 @@ export const handler = async function (event, context) {
         },
       ];
 
+  console.log("products", products);
+
   const body = products.items.map((product) => [
     product.name || "",
     product.category || "",
