@@ -65,16 +65,7 @@ const items = (row) => [
         console.log("Edit", row);
         isOpen.value = true;
         console.log(row);
-        modelData = { ...row };
-      },
-    },
-    {
-      label: "Duplicar",
-      icon: "i-heroicons-document-duplicate-20-solid",
-      click: () => {
-        console.log("Duplicate", row.name);
-        console.log({ ...row });
-        productList.addProduct({ ...row });
+        id = row.id;
       },
     },
   ],
@@ -92,13 +83,13 @@ const items = (row) => [
 
 const isOpen = ref(false);
 
-let modelData = {};
+let id = null;
 
 function addOne(one) {
   productList.addProduct(one);
 }
 function updateOne(one) {
-  productList.updateProduct(modelData.id, one);
+  productList.updateProduct(id, one);
 }
 
 function upData() {
@@ -172,7 +163,7 @@ const updateFormat = computed(() => {
     <UModal v-model="isOpen">
       <edit-menu
         class="grid grid-cols-12 gap-4 w-full max-w-[32rem] mx-auto mb-4 p-4"
-        :modelData="modelData"
+        :id="id"
         label="Actualizar datos"
         @clickAddOne="updateOne"
       />

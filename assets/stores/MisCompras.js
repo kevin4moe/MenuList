@@ -12,7 +12,11 @@ export const useProductsStore = defineStore("misCompras", {
     countProducts: (state) => state.products.length,
   },
   actions: {
-    addProduct(product) {
+    addProduct(product, id = null) {
+      if (id) {
+        product = this.getProduct(id);
+      }
+
       const pct = new Product(product);
       this.products.push(pct);
     },
@@ -22,15 +26,26 @@ export const useProductsStore = defineStore("misCompras", {
     },
     updateProduct(id, productNew) {
       if (!id) return;
-      const index = this.products.findIndex((pct) => pct.id == id);
-      const product = new Product(productNew);
+      console.log(id, productNew);
+      const index = this.findProduct(id);
+      const product = this.getProduct(id);
+      product.name = productNew.name;
+      product.category = productNew.category;
+      product.unit = productNew.unit;
+      product.quantity = productNew.quantity;
+      product.price = productNew.price;
+      product.total = product.price * product.quantity;
       this.products.splice(index, 1, product);
     },
     removeProduct(id) {
       if (!id) return;
-      const index = this.products.findIndex((pct) => pct.id == id);
+      const index = this.findProduct(id);
       console.log(index);
       this.products.splice(index, 1);
+    },
+    findProduct(id) {
+      if (!id) return;
+      return this.products.findIndex((pct) => pct.id == id);
     },
   },
   hydrate(state, initialState) {

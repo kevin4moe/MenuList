@@ -1,14 +1,19 @@
 <script setup>
+import { useProductsStore } from "../assets/stores/MisCompras.js";
+
+const productList = useProductsStore();
+
 const props = defineProps({
-  modelData: Object,
-  label: String,
+  id: { type: String, required: false, default: null },
+  label: { type: String, required: false, default: "Agregar" },
 });
 
 const emit = defineEmits(["clickAddOne"]);
 
 const categories = ["Alimentos", "Bebidas", "Limpieza", "Higiene", "Otros"];
-const measurements = ["kg", "L", "und"];
-const md = props.modelData ? props.modelData : {};
+const measurements = ["und", "kg", "L"];
+
+const md = props.id ? productList.getProduct(props.id) : {};
 
 const art = reactive({
   name: md.name || "",
@@ -52,7 +57,11 @@ const art = reactive({
         </template>
       </UInput>
     </UFormGroup>
-    <UFormGroup class="col-span-5 mt-auto" name="price" label="Precio">
+    <UFormGroup
+      class="col-span-5 mt-auto"
+      name="price"
+      :label="art.unit == 'und' ? 'Precio x unidad' : `Precio x ${art.unit}`"
+    >
       <UInput
         v-model.number="art.price"
         type="number"
