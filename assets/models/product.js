@@ -11,7 +11,7 @@ class Product {
       price: 0,
     }
   ) {
-    this.ids = uuidv4();
+    this.id = uuidv4();
     this.name = pd.name || "NA";
     this.category = pd.category;
     this.unit = pd.unit;
@@ -24,9 +24,9 @@ class Product {
   //   return this.price * this.quantity;
   // }
 
-  get id() {
-    return this.ids;
-  }
+  // get id() {
+  //   return this.ids;
+  // }
 }
 
 export { Product };

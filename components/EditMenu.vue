@@ -1,9 +1,10 @@
 <script setup>
 const props = defineProps({
   modelData: Object,
+  label: String,
 });
 
-const emit = defineEmits(["addOne"]);
+const emit = defineEmits(["clickAddOne"]);
 
 const categories = ["Alimentos", "Bebidas", "Limpieza", "Higiene", "Otros"];
 const measurements = ["kg", "L", "und"];
@@ -59,8 +60,8 @@ const art = reactive({
         @focus="(event) => event.target.select()"
       />
     </UFormGroup>
-    <UButton class="col-span-12" block @click="$emit('clickAddOne', art)"
-      >Agregar a la lista</UButton
-    >
+    <UButton class="col-span-12" block @click="$emit('clickAddOne', art)">{{
+      props.label
+    }}</UButton>
   </div>
 </template>

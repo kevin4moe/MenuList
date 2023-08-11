@@ -43,41 +43,44 @@ useHead({
   ],
 });
 
-const columns = [
-  { key: "name", label: "Producto" },
+const columns = reactive([
+  {
+    key: "name",
+    label: "Articulo",
+  },
   { key: "category", label: "Categoria" },
   { key: "price", label: "Precio" },
   { key: "quantity", label: "Cantidad" },
   { key: "unit", label: "Unidad" },
   { key: "total", label: "Total" },
   { key: "actions" },
-];
-
-const selectedColumns = ref([...columns]);
+]);
 
 const items = (row) => [
   [
     {
-      label: "Edit",
-      icon: "i-heroicons-pencil-square-20-solid",
+      label: "Modificar",
+      icon: "i-heroicons-pencil-square-20-solid last:text-red-900",
       click: () => {
         console.log("Edit", row);
         isOpen.value = true;
+        console.log(row);
         modelData = { ...row };
       },
     },
     {
-      label: "Duplicate",
+      label: "Duplicar",
       icon: "i-heroicons-document-duplicate-20-solid",
       click: () => {
         console.log("Duplicate", row.name);
-        productList.addProduct({ ...row, id: row.id });
+        console.log({ ...row });
+        productList.addProduct({ ...row });
       },
     },
   ],
   [
     {
-      label: "Delete",
+      label: "Quitar",
       icon: "i-heroicons-trash-20-solid",
       click: () => {
         console.log("Delete", row.name);
@@ -87,8 +90,6 @@ const items = (row) => [
   ],
 ];
 
-const selected = ref([productList.getProducts[0]]);
-
 const isOpen = ref(false);
 
 let modelData = {};
@@ -97,7 +98,7 @@ function addOne(one) {
   productList.addProduct(one);
 }
 function updateOne(one) {
-  productList.updateProduct(modelData.ids, one);
+  productList.updateProduct(modelData.id, one);
 }
 
 function upData() {
@@ -127,18 +128,34 @@ function upData() {
       window.URL.revokeObjectURL(url);
     });
 }
+
+const currencyFormatter = new Intl.NumberFormat("es-MX", {
+  style: "currency",
+  currency: "MXN",
+});
+
+const updateFormat = computed(() => {
+  return [
+    ...productList.getProducts.map((item) => {
+      return {
+        ...item,
+        price: currencyFormatter.format(item.price),
+        total: currencyFormatter.format(item.total),
+      };
+    }),
+    { total: currencyFormatter.format(productList.total) },
+  ];
+});
 </script>
 
 <template>
   <main class="container mx-auto">
     <edit-menu
       class="grid grid-cols-12 gap-4 w-full w-full max-w-[32rem] mx-auto mb-4 p-4"
+      label="Agregar a la lista"
       @clickAddOne="addOne"
     />
-    <UTable
-      :columns="selectedColumns"
-      :rows="[...productList.getProducts, { total: productList.total }]"
-    >
+    <UTable :columns="[...columns]" :rows="updateFormat">
       <template #name-data="{ row }">
         <span>{{ row.name }}</span>
       </template>
@@ -156,6 +173,7 @@ function upData() {
       <edit-menu
         class="grid grid-cols-12 gap-4 w-full max-w-[32rem] mx-auto mb-4 p-4"
         :modelData="modelData"
+        label="Actualizar datos"
         @clickAddOne="updateOne"
       />
     </UModal>
