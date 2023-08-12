@@ -5,7 +5,7 @@
       <div class="container flex justify-left gap-x-2 mx-auto overflow-x-auto">
         <UCard v-for="i in 10" class="flex-none w-80">
           <template #header>
-            <h4>Hoy</h4>
+            <h4>>Mandado de Hoy</h4>
           </template>
 
           <ul
