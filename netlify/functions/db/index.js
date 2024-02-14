@@ -3,7 +3,7 @@ import { MongoClient, ServerApiVersion } from 'mongodb';
 
 // Connection URI
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.v8usw.mongodb.net/?retryWrites=true&w=majority`;
-
+console.log(uri)
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
@@ -43,6 +43,11 @@ export const handler = async function (event = {}, context = {}) {
       total: 50,
     }];
 
+  groupUnits.items.forEach((item, i) => {
+    groupUnits.items[i].price = Number(item.price.replace(/[^0-9.-]+/g, ""));
+    groupUnits.items[i].total = Number(item.total.replace(/[^0-9.-]+/g, ""));
+  });
+
 
   run(async (db) => {
     const collectionUnits = db.collection(process.env.COLLECTION_UNITS);
@@ -62,7 +67,7 @@ export const handler = async function (event = {}, context = {}) {
 
   }).catch(console.dir);
 
-  console.log(event.body, context)
+  console.log(event.body, event)
 
   return {
     headers: {
