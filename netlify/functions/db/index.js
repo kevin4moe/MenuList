@@ -1,5 +1,5 @@
-require('dotenv').config()
-const { MongoClient, ServerApiVersion } = require('mongodb');
+import 'dotenv/config'
+import { MongoClient, ServerApiVersion } from 'mongodb';
 
 // Connection URI
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.v8usw.mongodb.net/?retryWrites=true&w=majority`;
@@ -12,16 +12,65 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
-async function run() {
+
+async function run(next) {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
-    await client.db("ba").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    const db = client.db(process.env.DB_NAME);
+    console.log("You successfully connected to DB!");
+
+    await next(db);
+
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
   }
 }
-run().catch(console.dir);
+
+export const handler = async function (event = {}, context = {}) {
+
+  const groupUnits = event.body
+    ? JSON.parse(event.body)
+    : [{
+      id: "b871487c-71ab-4f02-b284-274444cfde4d",
+      name: "a",
+      category: "Alimentos",
+      unit: "kg",
+      quantity: 2,
+      price: 25,
+      total: 50,
+    }];
+
+
+  run(async (db) => {
+    const collectionUnits = db.collection(process.env.COLLECTION_UNITS);
+    const collectionGroup = db.collection(process.env.COLLECTION_GROUP);
+
+    const cu = await collectionUnits.insertMany(groupUnits.items);
+    const cg = await collectionGroup.insertOne({
+      "id": "b871487c-71ab-4f02-b284-274444cfde4d",
+      "products_ids": groupUnits.items.map((pr) => pr.ids ? pr.ids : pr.id),
+      "date": new Date(),
+      "state": "Guanajuato",
+      "county": "Guanajuato",
+      "user_id": "4moe",
+    });
+
+    console.log(cu, cg);
+
+  }).catch(console.dir);
+
+  console.log(event.body, context)
+
+  return {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      // "Content-Type": "application/pdf",
+    },
+    statusCode: 200,
+    // body: body64.split(",")[1],
+    // isBase64Encoded: true,
+  };
+}
