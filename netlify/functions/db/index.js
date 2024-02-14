@@ -44,7 +44,9 @@ export const handler = async function (event = {}, context = {}) {
     }];
 
   groupUnits.items.forEach((item, i) => {
-    groupUnits.items[i].price = Number(item.price.replace(/[^0-9.-]+/g, ""));
+    if (item.price) {
+      groupUnits.items[i].price = Number(item.price.replace(/[^0-9.-]+/g, ""));
+    }
     groupUnits.items[i].total = Number(item.total.replace(/[^0-9.-]+/g, ""));
   });
 
