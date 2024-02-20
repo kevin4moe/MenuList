@@ -6,7 +6,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@clu
 
 let cachedDb = null;
 
-async function connectToDatabase() {
+export async function connectToDatabase() {
   // Create a MongoClient with a MongoClientOptions object to set the Stable API version
   const client = new MongoClient(uri, {
     serverApi: {
@@ -34,6 +34,7 @@ export const handler = async function (event = {}, context = {}) {
     ? JSON.parse(event.body)
     : [];
 
+  groupUnits.items.pop();
   groupUnits.items.forEach((item, i) => {
     if (item.price) {
       groupUnits.items[i].price = Number(item.price.replace(/[^0-9.-]+/g, ""));
@@ -50,7 +51,6 @@ export const handler = async function (event = {}, context = {}) {
     "products_ids": groupUnits.items.map((pr) => pr.ids ? pr.ids : pr.id),
     "date": new Date(),
     "state": "Guanajuato",
-    "county": "Guanajuato",
     "user_id": "4moe",
   });
 
