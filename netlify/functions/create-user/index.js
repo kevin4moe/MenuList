@@ -8,6 +8,7 @@ export const handler = async function (event = {}, context = {}) {
   const collectionUsers = db.collection(process.env.COLLECTION_UNITS);
 
   const user = JSON.parse(event.body);
+  console.log(user)
   user.email = user.email;
   const salt = randomBytes(16).toString('hex');
 
